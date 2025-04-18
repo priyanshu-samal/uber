@@ -9,7 +9,7 @@ const express = require('express');
 const app = express(); 
 const cors = require('cors');
 const userRoutes = require('./routes/user.routes');
-
+const captainRoutes = require('./routes/captain.routes');
 // Connect to MongoDB
 connectToDb();
 
@@ -26,5 +26,6 @@ app.get('/', (req, res) => {
 
 // API routes
 app.use('/users', userRoutes);
+app.use('/captains', captainRoutes);
 
 module.exports = app;
