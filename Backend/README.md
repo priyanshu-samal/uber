@@ -88,7 +88,7 @@ A valid JWT token must be provided in the Authorization header (as `Bearer token
 ### 1. /captain/register
 
 #### Description
-This endpoint is used to register a new captain. It validates the input data, creates the captain, and generates a JWT token along with returning the registered captain’s details.
+This endpoint is used to register a new captain. It validates the input data, creates the captain record, and generates a JWT token. The captain’s details are returned along with the token.
 
 #### Endpoint
 **POST /captain/register**
@@ -140,6 +140,105 @@ This endpoint is used to register a new captain. It validates the input data, cr
     "status": "inactive",
     "socketId": null
   }
+}
+```
+
+---
+
+### 2. /captain/login
+
+#### Description
+This endpoint logs in an existing captain by verifying their email and password. Upon successful authentication, a JWT token and the captain’s details are returned.
+
+#### Endpoint
+**POST /captain/login**
+
+#### Required Data Format
+```json
+{
+  "email": "valid email address",
+  "password": "string (min 6 characters)"
+}
+```
+
+#### Example Response
+```json
+{
+  "success": true,
+  "message": "Captain logged in successfully",
+  "token": "YOUR_JWT_TOKEN_PLACEHOLDER",
+  "captain": {
+    "fullname": {
+      "firstname": "Jane",
+      "lastname": "Doe"
+    },
+    "email": "janedoe@example.com",
+    "vechicle": {
+      "color": "red",
+      "plate": "XYZ123",
+      "capacity": 4,
+      "vechicleType": "car"
+    },
+    "status": "inactive",
+    "socketId": null
+  }
+}
+```
+
+---
+
+### 3. /captain/profile
+
+#### Description
+This endpoint retrieves the profile of the currently authenticated captain. It requires a valid token provided via a cookie or the Authorization header.
+
+#### Endpoint
+**GET /captain/profile**
+
+#### Authentication
+A valid JWT token must be provided in the Authorization header (as `Bearer token`) or as a cookie named `token`.
+
+#### Example Response
+```json
+{
+  "success": true,
+  "message": "Captain profile fetched successfully",
+  "captain": {
+    "fullname": {
+      "firstname": "Jane",
+      "lastname": "Doe"
+    },
+    "email": "janedoe@example.com",
+    "vechicle": {
+      "color": "red",
+      "plate": "XYZ123",
+      "capacity": 4,
+      "vechicleType": "car"
+    },
+    "status": "inactive",
+    "socketId": null
+  }
+}
+```
+
+---
+
+### 4. /captain/logout
+
+#### Description
+This endpoint logs out the captain by clearing the token cookie and blacklisting the provided token.
+
+#### Endpoint
+**GET /captain/logout**
+
+#### Authentication
+A valid JWT token must be provided in the Authorization header (as `Bearer token`) or as a cookie named `token`.
+
+#### Example Response
+```json
+{
+  "success": true,
+  "message": "Captain logged out successfully"
 }
 ```
 
